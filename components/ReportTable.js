@@ -1,6 +1,8 @@
 import { hours } from "./data"
-
+import useResource from '../hooks/useResource'
 export default function ReportTableStandHeader({data}) {
+  const { resources, loading, createResource, deleteResource } = useResource();
+
     return (
         <table className="" >
             <thead>
@@ -15,7 +17,8 @@ export default function ReportTableStandHeader({data}) {
         </thead>
           { data.map(value=>
           <tbody>
-              <tr className=""> <td> {value.location}</td>  
+              <tr key={value.id}  className="" > <td> {value.location}</td>  
+              <span onClick={() => deleteResource(value.id)}>X</span>
                {value.data.map(sale=>{
                    return <td>{sale}</td>
                     })}

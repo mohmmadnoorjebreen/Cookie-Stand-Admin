@@ -1,9 +1,12 @@
+
+import useResource from '../hooks/useResource'
 export default function FormStandHeader({setCookie}) {
 
-    
+    const { resources, loading, createResource, deleteResource } = useResource();
+
     function onCreate (event) {
         event.preventDefault();
-        
+         
         const obj = {
          'location': event.target.location.value,
          'minCustomers': event.target.minimum.value,
@@ -11,8 +14,9 @@ export default function FormStandHeader({setCookie}) {
          'avgCustomers': event.target.avgCustomers.value,
          'data' : [48, 42, 30, 24, 42, 24, 36, 42, 42, 48, 36, 42, 24, 36] 
         }
-    
-      setCookie(Cookies => [...Cookies, obj])
+        createResource(obj)
+        console.log(resources);
+  
     }
     
     return (
