@@ -1,42 +1,41 @@
 import { hours } from "./data"
 import useResource from '../hooks/useResource'
-export default function ReportTableStandHeader({data}) {
-  const { resources, loading, createResource, deleteResource } = useResource();
+export default function ReportTableStandHeader() {
+   const { resources, loading, createResource, deleteResource } = useResource();
 
     return (
-        <table className="" >
+        <table className="mx-auto w-1/2 my-4" >
             <thead>
                  <tr>
-                 <th>location</th>
+                 <th className="p-3 border border-gray-70 bg-green-600" >location</th>
         {hours.map((value)=>{
-          return <th>{value}</th>
+          return <th className="p-3 border border-gray-70 bg-green-600" >{value}</th>
            
           })}
-          <th>Total</th>
+          <th className="p-3 border border-gray-70 bg-green-600" >Total</th>
         </tr>
         </thead>
-          { data.map(value=>
+          { resources.map(value=>
           <tbody>
               <tr key={value.id}  className="" > <td> {value.location}</td>  
-              <span onClick={() => deleteResource(value.id)}>X</span>
-               {value.data.map(sale=>{
+             
+               {value.hourly_sales.map(sale=>{
                    return <td>{sale}</td>
                     })}
-              <td>516</td></tr>
+             <td>{(value.hourly_sales.reduce((a, b) => a + b, 0))}</td>
+              <td onClick={() => deleteResource(value.id)}>X</td></tr>
           </tbody>
               )
         }
            <tfoot>
-           <td>Total</td>
-           { data[0].data.map(value=>
-             <td>{value*data.length}</td>
+           <td className="p-3 pl-2 border bg-green-500" >Total</td>
+           { resources[0].hourly_sales.map(value=>
+             <td>{(value)}</td>
               )
         }
-        <td>{516*data.length}</td>
+        <td >{516*resources.length}</td>
 
            </tfoot>
       </table> 
     )
 }
-
-

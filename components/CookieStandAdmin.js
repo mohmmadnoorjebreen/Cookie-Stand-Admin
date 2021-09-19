@@ -4,10 +4,13 @@ import CookieStandHeader from './Header'
 import FormStandHeader from './CreateForm'
 import ReportTableStandHeader from './ReportTable'
 import FooterStandHeader from './Footer'
-export default function CookieStandAdmin() {
-  const [Cookie , setCookie ] = useState([]);
-   
+import useResource from '../hooks/useResource'
 
+export default function CookieStandAdmin() {
+ 
+
+  const { resources, loading, createResource, deleteResource,fetchResource } = useResource();
+  if (loading) return <p>loading....</p>  
   return (
     <div>
       <Head>
@@ -21,11 +24,11 @@ export default function CookieStandAdmin() {
       </div>
       <main>
         
-        <FormStandHeader setCookie={ setCookie }></FormStandHeader>
+        <FormStandHeader ></FormStandHeader>
 
 
-    { Cookie.length ? 
-    <ReportTableStandHeader data = {Cookie}> 
+    {  resources ? 
+    <ReportTableStandHeader > 
       
     </ReportTableStandHeader> :
     <h2>No Cookie Stands Available</h2>
@@ -33,9 +36,10 @@ export default function CookieStandAdmin() {
        
       </main>
                              
-      <FooterStandHeader value = {Cookie}>
+      <FooterStandHeader >
 
       </FooterStandHeader>
     </div>
   )
 }
+

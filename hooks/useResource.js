@@ -1,7 +1,7 @@
 import axios from 'axios'
 import useSWR from 'swr'
 
-export const apiUrl ='https://sport-1.herokuapp.com/api-auth/';
+export const apiUrl ='http://cookie-stand-api-10.herokuapp.com/api/v1/cookie_stands/';
 import { useAuth } from '../contexts/auth'
 
 export default function useResource() {
@@ -17,19 +17,21 @@ export default function useResource() {
         }
 
         try {
+            
             const response = await axios.get(url, config());
-
+            console.log('response.data',response.data);
             return response.data;
 
         } catch (error) {
+         
             handleError(error);
         }
     }
 
     async function createResource(info) {
-
         try {
-            await axios.post(apiUrl, info, config());
+            const url = apiUrl ;
+            await axios.post(url, info, config());
             mutate(); 
         } catch (error) {
             handleError(error);
@@ -53,7 +55,7 @@ export default function useResource() {
 
 
     function config() {
-
+        console.log(tokens);
         return {
             headers: {
                 'Authorization': 'Bearer ' + tokens.access
@@ -66,6 +68,7 @@ export default function useResource() {
         logout();
     }
 
+    {console.log(data)}
     return {
         resources: data,
         error,
